@@ -1,6 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
 using CryptoPriceTracker.Api.Services;
-using CryptoPriceTracker.Api.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CryptoPriceTracker.Api.Controllers
 {
@@ -25,8 +24,7 @@ namespace CryptoPriceTracker.Api.Controllers
         [HttpPost("update-prices")]
         public async Task<IActionResult> UpdatePrices()
         {
-            // Uncomment and call the service here
-            // await _service.UpdatePricesAsync();
+            await _service.UpdatePricesAsync();
 
             return Ok("Prices updated."); // Optional: Replace with a real result message
         }
