@@ -1,4 +1,4 @@
-using CryptoPriceTracker.Api.Models;
+using CryptoPriceTracker.Domain.Entities;
 
 namespace CryptoPriceTracker.Api.Validators;
 

@@ -1,5 +1,6 @@
-using CryptoPriceTracker.Api.Data;
-using CryptoPriceTracker.Api.Models;
+using CryptoPriceTracker.Application.Interfaces;
+using CryptoPriceTracker.Domain.Entities;
+using CryptoPriceTracker.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -8,7 +9,7 @@ namespace CryptoPriceTracker.Api.Services;
 /// <summary>
 /// Service for managing and updating cryptocurrency prices.
 /// </summary>
-public class CryptoPriceService
+public class CryptoPriceService : ICryptoPriceService
 {
     private readonly ApplicationDbContext _dbContext;
 

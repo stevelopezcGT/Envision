@@ -1,4 +1,4 @@
-using CryptoPriceTracker.Api.Services;
+using CryptoPriceTracker.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CryptoPriceTracker.Api.Controllers
@@ -7,10 +7,10 @@ namespace CryptoPriceTracker.Api.Controllers
     [Route("api/crypto")]
     public class CryptoController : ControllerBase
     {
-        private readonly CryptoPriceService _service;
+        private readonly ICryptoPriceService _service;
 
         // Constructor with dependency injection of the service
-        public CryptoController(CryptoPriceService service)
+        public CryptoController(ICryptoPriceService service)
         {
             _service = service;
         }
