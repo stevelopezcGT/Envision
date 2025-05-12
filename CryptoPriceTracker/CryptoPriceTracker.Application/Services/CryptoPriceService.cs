@@ -40,7 +40,7 @@ public class CryptoPriceService : ICryptoPriceService
         _httpClient.DefaultRequestHeaders.Add("x-cg-demo-api-key", "CG-ycBGXkiM7uK7QfVqCsoCwy9n");
 
         // Fetch the latest prices from the external API.
-        var response = await _httpClient.GetAsync("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd");
+        var response = await _httpClient.GetAsync("https://ap2i.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd");
 
         if (response.IsSuccessStatusCode)
         {

@@ -1,9 +1,7 @@
 using CryptoPriceTracker.Api.Extensions;
-using CryptoPriceTracker.Application.Interfaces;
-using CryptoPriceTracker.Application.Services;
 using CryptoPriceTracker.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using Places.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +23,8 @@ app.UseSwaggerUI();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
+
+app.UseExceptionMiddleware();
 
 app.MapControllerRoute(
     name: "default",
