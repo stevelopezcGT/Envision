@@ -3,16 +3,41 @@
 }
 
 <h1>Crypto Price Tracker</h1>
-
+<div id="pricesContainer">
+    
+</div>
 <button id="updateBtn">Update Prices</button>
 <div id="statusMessage"></div>
 
 <script>
+
+      function convertDates() {
+          document.querySelectorAll(".local-date").forEach(el => {
+            const utc = el.getAttribute("data-utc");
+            if (!utc) return;
+            const convertedDate = new Date(utc);
+            
+            el.textContent = convertedDate.toLocaleDateString(undefined, { dateStyle: 'medium' });
+          });
+    }
+
     document.getElementById("updateBtn").addEventListener("click", async () => {
+        const container = document.getElementById("pricesContainer");
+
         const response = await fetch("/api/crypto/update-prices", {
             method: "POST"
         });
         const message = response.ok ? "✅ Prices updated!" : "❌ Failed to update.";
         document.getElementById("statusMessage").innerText = message;
+
+        const gridResp = await fetch('/cryptoInfoList', {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
+        if (gridResp.ok) {
+            container.innerHTML = await gridResp.text();
+            convertDates();
+        } else {
+            container.innerHTML = '<p class="text-danger">No se pudo cargar la tabla.</p>';
+        }
     });
 </script>

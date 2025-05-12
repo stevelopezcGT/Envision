@@ -1,7 +1,6 @@
 ﻿using CryptoPriceTracker.Application.Dto;
 using CryptoPriceTracker.Application.Interfaces;
 using CryptoPriceTracker.Application.Services;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace CryptoPriceTracker.Api.Extensions;
@@ -12,15 +11,16 @@ public static class ModulesExtensions
     {
         services.AddScoped<ICryptoPriceService, CryptoPriceService>();
 
-        services.Configure<CoinGeckoSetting>(configuration.GetSection("CoinGeckoSetting"));
+        services.Configure<CoinGeckoSettings>(configuration.GetSection("CoinGeckoSettings"));
+        services.Configure<SiteSettings>(configuration.GetSection("SiteSettings"));
 
         services.AddHttpClient<ICryptoPriceService, CryptoPriceService>(client =>
         {
-            var coinGeckoSetting = configuration.GetSection("CoinGeckoSetting").Get<CoinGeckoSetting>();
+            var coinGeckoSettings = configuration.GetSection("CoinGeckoSettings").Get<CoinGeckoSettings>();
 
-            client.BaseAddress = new Uri(coinGeckoSetting.BaseUrl);
+            client.BaseAddress = new Uri(coinGeckoSettings.BaseUrl);
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            client.DefaultRequestHeaders.Add("x-cg-demo-api-key", coinGeckoSetting.ApiKey);
+            client.DefaultRequestHeaders.Add("x-cg-demo-api-key", coinGeckoSettings.ApiKey);
         });
 
         return services;

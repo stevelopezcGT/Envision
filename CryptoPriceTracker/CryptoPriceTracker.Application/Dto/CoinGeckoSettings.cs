@@ -1,6 +1,6 @@
 ﻿namespace CryptoPriceTracker.Application.Dto;
 
-public class CoinGeckoSetting
+public class CoinGeckoSettings
 {
     public string BaseUrl { get; set; } = string.Empty;
 

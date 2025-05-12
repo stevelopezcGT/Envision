@@ -19,14 +19,14 @@ public class CryptoPriceService : ICryptoPriceService
 
     private readonly string _currency = "usd";
 
-    private readonly CoinGeckoSetting _coinGeckoSetting;
+    private readonly CoinGeckoSettings _coinGeckoSetting;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CryptoPriceService"/> class.
     /// </summary>
     /// <param name="dbContext">The database context for accessing and managing data.</param>
     /// <param name="httpClient">The HTTP client for making API requests.</param>
-    public CryptoPriceService(ApplicationDbContext dbContext, HttpClient httpClient, IOptions<CoinGeckoSetting> coinGeckoSettings)
+    public CryptoPriceService(ApplicationDbContext dbContext, HttpClient httpClient, IOptions<CoinGeckoSettings> coinGeckoSettings)
     {
         _dbContext = dbContext;
         _httpClient = httpClient;
@@ -106,7 +106,7 @@ public class CryptoPriceService : ICryptoPriceService
                 var previousPrice = lastPrice.Skip(1).FirstOrDefault();
 
                 var changePercentage =
-                    previousPrice != null && currentPrice != null ? ((currentPrice.Price - previousPrice.Price) / previousPrice.Price) * 100 : 0;
+                    previousPrice != null && currentPrice != null ? ((currentPrice.Price / previousPrice.Price) - 1) : 0;
 
                 cryptoCurrencies.Add(new CryptoCurrencyDto
                 {

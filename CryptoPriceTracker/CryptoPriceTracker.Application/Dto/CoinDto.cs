@@ -15,6 +15,7 @@ public class CoinDto
 
     [JsonProperty("image")]
     public Image Image { get; set; } = null!;
+
 }
 
 public class Image
