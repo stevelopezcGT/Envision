@@ -12,15 +12,19 @@
     <Compile Remove="Data\**" />
     <Compile Remove="Migrations\**" />
     <Compile Remove="Models\**" />
+    <Compile Remove="Services\**" />
     <Content Remove="Data\**" />
     <Content Remove="Migrations\**" />
     <Content Remove="Models\**" />
+    <Content Remove="Services\**" />
     <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Services\**" />
     <None Remove="Data\**" />
     <None Remove="Migrations\**" />
     <None Remove="Models\**" />
+    <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>

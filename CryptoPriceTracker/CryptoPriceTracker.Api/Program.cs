@@ -1,7 +1,9 @@
-using CryptoPriceTracker.Api.Services;
+using CryptoPriceTracker.Api.Extensions;
 using CryptoPriceTracker.Application.Interfaces;
+using CryptoPriceTracker.Application.Services;
 using CryptoPriceTracker.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,11 +11,11 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite("Data Source=data\\crypto.db"));
 
-builder.Services.AddScoped<ICryptoPriceService, CryptoPriceService>();
+builder.Services.AddServices();
 
 builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 
 var app = builder.Build();
 
