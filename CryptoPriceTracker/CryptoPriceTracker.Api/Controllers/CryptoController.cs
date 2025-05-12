@@ -3,24 +3,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CryptoPriceTracker.Api.Controllers;
 
+/// <summary>
+/// Controller for handling cryptocurrency-related operations.
+/// </summary>
 [ApiController]
 [Route("api/crypto")]
 public class CryptoController : ControllerBase
 {
     private readonly ICryptoPriceService _service;
 
-    // Constructor with dependency injection of the service
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CryptoController"/> class.
+    /// </summary>
+    /// <param name="service">The service for handling cryptocurrency price operations.</param>
     public CryptoController(ICryptoPriceService service)
     {
         _service = service;
     }
 
     /// <summary>
-    /// TODO: Implement logic to call the UpdatePricesAsync method from the service
-    /// This endpoint should trigger a price update by fetching prices from the CoinGecko API
-    /// and saving them in the database through the service logic.
+    /// Triggers an update of cryptocurrency prices by fetching data from the CoinGecko API
+    /// and saving it to the database.
     /// </summary>
-    /// <returns>200 OK with a confirmation message once done</returns>
+    /// <returns>An <see cref="IActionResult"/> indicating the result of the operation.</returns>
     [HttpPost("update-prices")]
     public async Task<IActionResult> UpdatePrices()
     {
@@ -30,25 +35,12 @@ public class CryptoController : ControllerBase
     }
 
     /// <summary>
-    /// TODO: Implement an endpoint to return the latest prices per crypto asset.
-    /// This will allow the frontend to display the most recent data saved in the database.
+    /// Retrieves the latest cryptocurrency prices.
     /// </summary>
-    /// <returns>A list of assets and their latest recorded price</returns>
-    // [HttpGet("latest-prices")]
-    // public async Task<IActionResult> GetLatestPrices([FromServices] ApplicationDbContext db)
-    // {
-    //     // Sample logic (you can customize this query as needed):
-    //     var latest = await db.CryptoAssets
-    //         .Select(asset => new {
-    //             asset.Name,
-    //             asset.Symbol,
-    //             asset.ExternalId,
-    //             Price = asset.PriceHistory
-    //                 .OrderByDescending(p => p.Date)
-    //                 .FirstOrDefault().Price
-    //         })
-    //         .ToListAsync();
-
-    //     return Ok(latest);
-    // }
+    /// <returns>An <see cref="IActionResult"/> containing a list of cryptocurrency details.</returns>
+    [HttpGet("latest-prices")]
+    public async Task<IActionResult> GetLatestPrices()
+    {
+        return Ok(await _service.GetCryptoCurrenciesAsync());
+    }
 }

@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite("Data Source=data\\crypto.db"));
 
-builder.Services.AddServices();
+builder.Services.AddServices(builder.Configuration);
 
 builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();

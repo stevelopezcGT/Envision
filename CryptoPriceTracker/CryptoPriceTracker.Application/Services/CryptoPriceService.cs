@@ -1,7 +1,9 @@
+using CryptoPriceTracker.Application.Dto;
 using CryptoPriceTracker.Application.Interfaces;
 using CryptoPriceTracker.Domain.Entities;
 using CryptoPriceTracker.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace CryptoPriceTracker.Application.Services;
@@ -15,15 +17,20 @@ public class CryptoPriceService : ICryptoPriceService
 
     private readonly HttpClient _httpClient;
 
+    private readonly string _currency = "usd";
+
+    private readonly CoinGeckoSetting _coinGeckoSetting;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="CryptoPriceService"/> class.
     /// </summary>
     /// <param name="dbContext">The database context for accessing and managing data.</param>
     /// <param name="httpClient">The HTTP client for making API requests.</param>
-    public CryptoPriceService(ApplicationDbContext dbContext, HttpClient httpClient)
+    public CryptoPriceService(ApplicationDbContext dbContext, HttpClient httpClient, IOptions<CoinGeckoSetting> coinGeckoSettings)
     {
         _dbContext = dbContext;
         _httpClient = httpClient;
+        _coinGeckoSetting = coinGeckoSettings.Value;
     }
 
     /// <summary>
@@ -33,44 +40,34 @@ public class CryptoPriceService : ICryptoPriceService
     /// <returns>A task that represents the asynchronous operation.</returns>
     public async Task UpdatePricesAsync()
     {
-        // Retrieve the list of cryptocurrency assets from the database.
         var cryptoAssets = await _dbContext.CryptoAssets.ToListAsync();
+        string cryptoAssetsString = string.Join(",", cryptoAssets.Select(a => a.Name.ToLower()));
 
-        _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-        _httpClient.DefaultRequestHeaders.Add("x-cg-demo-api-key", "CG-ycBGXkiM7uK7QfVqCsoCwy9n");
-
-        // Fetch the latest prices from the external API.
-        var response = await _httpClient.GetAsync("https://ap2i.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd");
+        var response = await _httpClient.GetAsync($"{_coinGeckoSetting.EndPoints.SimplePrice}?ids={cryptoAssetsString}&vs_currencies={_currency}");
 
         if (response.IsSuccessStatusCode)
         {
-            // Parse the JSON response into a dictionary of prices.
             var json = await response.Content.ReadAsStringAsync();
             var prices = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, decimal>>>(json);
 
             bool pendingChanges = false;
             foreach (var asset in cryptoAssets)
             {
-                // Get the current date in UTC.
                 var today = DateTime.UtcNow.Date;
 
-                // Retrieve the most recent price history for the asset.
                 var lastPrice = await _dbContext.CryptoPriceHistories
                     .Where(p => p.CryptoAssetId == asset.Id)
                     .OrderByDescending(p => p.Date)
                     .FirstOrDefaultAsync();
 
-                // Skip if a price for today already exists.
                 if (lastPrice != null && lastPrice.Date == today)
                 {
                     continue;
                 }
 
-                // Get the new price for the asset from the API response.
-                var newPrice = prices.GetValueOrDefault(asset.ExternalId)?["usd"] ?? 0;
+                var newPrice = prices.GetValueOrDefault(asset.ExternalId)?[_currency] ?? 0;
                 if (newPrice > 0)
                 {
-                    // Create a new price history record and add it to the database.
                     var priceHistory = new CryptoPriceHistory
                     {
                         CryptoAssetId = asset.Id,
@@ -85,5 +82,70 @@ public class CryptoPriceService : ICryptoPriceService
             if (pendingChanges)
                 _dbContext.SaveChanges();
         }
+    }
+
+    /// <summary>
+    /// Retrieves a list of cryptocurrencies with their details and price information.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation. The task result contains a list of <see cref="CryptoCurrencyDto"/>.</returns>
+    public async Task<List<CryptoCurrencyDto>> GetCryptoCurrenciesAsync()
+    {
+        var cryptoAssets = await _dbContext.CryptoAssets.ToListAsync();
+        List<CryptoCurrencyDto> cryptoCurrencies = new List<CryptoCurrencyDto>();
+
+        foreach (var asset in cryptoAssets)
+        {
+            var lastPrice = _dbContext.CryptoPriceHistories
+                .Where(p => p.CryptoAssetId == asset.Id)
+                .OrderByDescending(p => p.Date)
+                .Take(2);
+
+            if (lastPrice is not null)
+            {
+                var currentPrice = lastPrice.FirstOrDefault();
+                var previousPrice = lastPrice.Skip(1).FirstOrDefault();
+
+                var changePercentage =
+                    previousPrice != null && currentPrice != null ? ((currentPrice.Price - previousPrice.Price) / previousPrice.Price) * 100 : 0;
+
+                cryptoCurrencies.Add(new CryptoCurrencyDto
+                {
+                    Name = asset.Name,
+                    Symbol = asset.Symbol,
+                    CurrentPrice = currentPrice?.Price ?? 0m,
+                    PriceChangePercentage24h = changePercentage,
+                    LastUpdated = currentPrice?.Date,
+                    Trend = changePercentage switch
+                    {
+                        > 0 => 1,
+                        < 0 => -1,
+                        _ => 0
+                    },
+                    Currency = _currency,
+                    Icon = await GetIconUrl(asset.Name.ToLower())
+                });
+            }
+        }
+
+        return cryptoCurrencies;
+    }
+
+    /// <summary>
+    /// Retrieves the icon URL for a given cryptocurrency asset.
+    /// </summary>
+    /// <param name="assetName">The name of the cryptocurrency asset.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the icon URL as a string.</returns>
+    private async Task<string> GetIconUrl(string assetName)
+    {
+        var response = await _httpClient.GetAsync($"{_coinGeckoSetting.EndPoints.CoinsInfo}/{assetName}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            var coinDto = JsonConvert.DeserializeObject<CoinDto>(json);
+            if (coinDto is not null)
+                return coinDto.Image.Thumb;
+        }
+        return string.Empty;
     }
 }

@@ -10,5 +10,7 @@ public class CryptoAsset
 
     public string ExternalId { get; set; } = null!;
 
+    public string IconUrl { get; set; } = null!;
+
     public ICollection<CryptoPriceHistory> PriceHistory { get; set; } = null!;
 }

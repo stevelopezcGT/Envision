@@ -16,8 +16,8 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CryptoAsset>().HasData(
-            new CryptoAsset { Id = 1, Name = "Bitcoin", Symbol = "BTC", ExternalId = "bitcoin" },
-            new CryptoAsset { Id = 2, Name = "Ethereum", Symbol = "ETH", ExternalId = "ethereum" }
+            new CryptoAsset { Id = 1, Name = "Bitcoin", Symbol = "BTC", ExternalId = "bitcoin", IconUrl = string.Empty },
+            new CryptoAsset { Id = 2, Name = "Ethereum", Symbol = "ETH", ExternalId = "ethereum", IconUrl = string.Empty }
         );
     }
 }
