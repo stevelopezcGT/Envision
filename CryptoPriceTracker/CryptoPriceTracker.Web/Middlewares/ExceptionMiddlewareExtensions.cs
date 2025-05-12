@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
 
-namespace CryptoPriceTracker.Api.Middlewares;
+namespace CryptoPriceTracker.Web.Middlewares;
 
 /// <summary>
 /// Extend the handler to capture the Exceptions

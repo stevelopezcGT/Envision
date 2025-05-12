@@ -1,4 +1,4 @@
-﻿namespace CryptoPriceTracker.Api.Middlewares;
+﻿namespace CryptoPriceTracker.Web.Middlewares;
 
 /// <summary>
 /// Handler the exceptions

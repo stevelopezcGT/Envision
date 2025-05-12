@@ -13,18 +13,26 @@
     <Compile Remove="Migrations\**" />
     <Compile Remove="Models\**" />
     <Compile Remove="Services\**" />
+    <Compile Remove="Views\**" />
     <Content Remove="Data\**" />
     <Content Remove="Migrations\**" />
     <Content Remove="Models\**" />
     <Content Remove="Services\**" />
+    <Content Remove="Views\**" />
     <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="Views\**" />
     <None Remove="Data\**" />
     <None Remove="Migrations\**" />
     <None Remove="Models\**" />
     <None Remove="Services\**" />
+    <None Remove="Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\HomeController.cs" />
   </ItemGroup>
 
   <ItemGroup>

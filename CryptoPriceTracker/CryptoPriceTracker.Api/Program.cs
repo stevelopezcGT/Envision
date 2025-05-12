@@ -1,7 +1,7 @@
 using CryptoPriceTracker.Api.Extensions;
+using CryptoPriceTracker.Api.Middlewares;
 using CryptoPriceTracker.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using Places.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,12 +13,19 @@ builder.Services.AddServices(builder.Configuration);
 
 builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwagger();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSwagger();
+}
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseStaticFiles();
 app.UseRouting();
