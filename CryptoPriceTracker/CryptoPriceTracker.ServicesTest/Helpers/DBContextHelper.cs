@@ -2,33 +2,14 @@
 
 public static class DBContextHelper
 {
-    public static ApplicationDbContext GetDbContextWithData()
+    public static ApplicationDbContext GetDbContextWithData(List<CryptoAsset> assets, List<CryptoPriceHistory> histories)
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-
-            // No other changes are needed in the file.
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
-
         var dbContext = new ApplicationDbContext(options);
-
-        dbContext.CryptoAssets.Add(new CryptoAsset
-        {
-            Id = 1,
-            Name = "Bitcoin",
-            Symbol = "BTC",
-            ExternalId = "bitcoin",
-            IconUrl = string.Empty
-        });
-
-        dbContext.CryptoPriceHistories.Add(new CryptoPriceHistory
-        {
-            Id = 1,
-            CryptoAssetId = 1,
-            Price = 50000,
-            Date = DateTime.UtcNow.Date.AddDays(-1)
-        });
-
+        dbContext.CryptoAssets.AddRange(assets);
+        dbContext.CryptoPriceHistories.AddRange(histories);
         dbContext.SaveChanges();
         return dbContext;
     }

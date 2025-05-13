@@ -17,7 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "CryptoPriceTracker.W
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9534ABFE-84B4-4BB5-8151-5D16D52B86CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoPriceTracker.ApplicationTest", "CryptoPriceTracker.ServicesTest\CryptoPriceTracker.ApplicationTest.csproj", "{DBFAA5A0-F385-42D5-A1DA-6C9D85A35D98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationTest", "CryptoPriceTracker.ServicesTest\ApplicationTest.csproj", "{DBFAA5A0-F385-42D5-A1DA-6C9D85A35D98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTest", "CryptoPriceTracker.ApiTest\ApiTest.csproj", "{76759D96-41ED-4FC1-AFDD-A923AB26B601}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{DBFAA5A0-F385-42D5-A1DA-6C9D85A35D98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBFAA5A0-F385-42D5-A1DA-6C9D85A35D98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBFAA5A0-F385-42D5-A1DA-6C9D85A35D98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76759D96-41ED-4FC1-AFDD-A923AB26B601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76759D96-41ED-4FC1-AFDD-A923AB26B601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76759D96-41ED-4FC1-AFDD-A923AB26B601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76759D96-41ED-4FC1-AFDD-A923AB26B601}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{A1A855F4-BBEA-4CF6-9023-18CECA2BDADD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A687DCFD-A93C-473C-932B-66A678016116} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{DBFAA5A0-F385-42D5-A1DA-6C9D85A35D98} = {9534ABFE-84B4-4BB5-8151-5D16D52B86CE}
+		{76759D96-41ED-4FC1-AFDD-A923AB26B601} = {9534ABFE-84B4-4BB5-8151-5D16D52B86CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7ED56FCB-71ED-4C6F-97DC-7E8EAEC7A5E3}
