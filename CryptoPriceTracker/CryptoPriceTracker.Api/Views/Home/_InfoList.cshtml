@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CryptoPriceTracker.Application.Dto.CryptoCurrencyDto>
+
+<div id="spinner" class="d-none">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Symbol</th>
+            <th>Current Price</th>
+            <th>Currency</th>
+            <th>Icon</th>
+            <th>Last Updated</th>
+            <th>Trend</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Symbol</td>
+                <td>@item.CurrentPrice</td>
+                <td>@item.Currency.ToUpper()</td>
+                <td><img src="@item.Icon" /></td>
+                <td><span class="local-date" data-utc="@(item.LastUpdated.HasValue ? item.LastUpdated.Value.ToUniversalTime().ToString("O") : string.Empty)"></span></td>
+                <td>
+                    @switch (item.Trend)
+                    {
+                        case 1:
+                            <span class="text-success">🔼 (@item.PriceChangePercentage24h.ToString("P2"))</span>
+                            ;
+                            break;
+                        case -1:
+                            <span class="text-danger">🔽 (@item.PriceChangePercentage24h.ToString("P2"))</span>
+                            ;
+                            break;
+                        default:
+                            <span>➖</span>
+                            ;
+                            break;
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

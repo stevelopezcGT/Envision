@@ -1,0 +1,44 @@
+﻿function convertDates() {
+    document.querySelectorAll(".local-date").forEach(el => {
+        const utc = el.getAttribute("data-utc");
+        if (!utc) return;
+        const convertedDate = new Date(utc);
+        el.textContent = convertedDate.toLocaleDateString(undefined, { dateStyle: 'medium' });
+    });
+}
+
+async function loadInfoList() {
+
+    const container = document.getElementById("pricesContainer");
+    const gridResp = await fetch("/cryptoInfoList", {
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+    });
+    if (gridResp.ok) {
+        container.innerHTML = await gridResp.text();
+        convertDates();
+    } else {
+        container.innerHTML = "<p class='text-danger'>Unable to load the data.</p>";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const updateBtn = document.getElementById("updateBtn");
+    const spinner = document.getElementById("spinner");
+    const statusEl = document.getElementById("statusMessage");
+
+    loadInfoList();
+
+    updateBtn.addEventListener("click", async () => {
+        spinner.classList.remove("d-none");
+        document.querySelectorAll("table.table").forEach(t => t.remove());
+
+        const updResp = await fetch("/updatePrices", { method: "POST" });
+        statusEl.innerText = updResp.ok
+            ? ""
+            : "❌ Failed to update.";
+
+        loadInfoList();
+
+        spinner.classList.add("d-none");
+    });
+});

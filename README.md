@@ -130,24 +130,97 @@ as long as:
 
 Before submitting your solution, please ensure the following items are completed:
 
-- [ ] `CryptoPriceService.cs` fetches, saves, and avoids duplicates correctly
-- [ ] `namespace` declarations are consistent and correct across all files
-- [ ] `POST /api/crypto/update-prices` endpoint is functional
-- [ ] `GET /api/crypto/latest-prices` endpoint returns most recent prices
-- [ ] `IconUrl` property added to `CryptoAsset` model and stored in DB
-- [ ] Razor page (`Index.cshtml`) includes:
-  - [ ] Name
-  - [ ] Symbol
-  - [ ] Current Price and currency
-  - [ ] Icon
-  - [ ] Last Updated (adjusted to client timezone)
-  - [ ] Trend (up/down indicator and optional percentage change)
-- [ ] Button updates data and refreshes the view
-- [ ] Clear UI feedback after update attempts (success/failure)
-- [ ] Validation/error handling is implemented where needed
-- [ ] At least one unit test demonstrates validation or service logic
-- [ ] Comments provided for any assumptions or technical decisions
+- [x] `CryptoPriceService.cs` fetches, saves, and avoids duplicates correctly
+- [x] `namespace` declarations are consistent and correct across all files
+- [x] `POST /api/crypto/update-prices` endpoint is functional
+- [x] `GET /api/crypto/latest-prices` endpoint returns most recent prices
+- [x] `IconUrl` property added to `CryptoAsset` model and stored in DB
+- [x] Razor page (`Index.cshtml`) includes:
+  - [x] Name
+  - [x] Symbol
+  - [x] Current Price and currency
+  - [x] Icon
+  - [x] Last Updated (adjusted to client timezone)
+  - [x] Trend (up/down indicator and optional percentage change)
+- [x] Button updates data and refreshes the view
+- [x] Clear UI feedback after update attempts (success/failure)
+- [x] Validation/error handling is implemented where needed
+- [x] At least one unit test demonstrates validation or service logic
+- [x] Comments provided for any assumptions or technical decisions
 
 ---
 
 Good luck, and thank you for taking the time to complete this challenge!
+
+---
+# Challenge solution
+
+## 1. Clean Architecture for Flexibility, Maintainability & Scalability
+The core of the solution is organized into concentric layers:
+
+- **Entities (Domain Models)**  
+- **Use Cases (Application Logic)**  
+- **Interfaces / Adapters (API, UI, Database)**  
+- **Frameworks / Infrastructure**  
+
+By depending only inward, we ensure:
+- **Flexibility:**  
+  - Swap databases, UI frameworks, or third-party libraries by changing only the outer layers.  
+- **Maintainability:**  
+  - Each layer has a well-defined responsibility and interface, making it easy to locate and update code.  
+- **Scalability:**  
+  - Add new features (e.g., extra UI panels or integrations) as new adapters without touching core business logic.  
+
+---
+
+## 2. SOLID Principles & Single Responsibility
+Every class and module adheres to SOLID:
+
+1. **Single Responsibility Principle (SRP)**  
+   - Classes and methods do exactly one thing—no tangled responsibilities.  
+2. **Open/Closed Principle (OCP)**  
+   - Core logic is open for extension but closed for modification.  
+3. **Liskov Substitution Principle (LSP)**  
+   - Abstractions allow interchangeable implementations without side effects.  
+4. **Interface Segregation Principle (ISP)**  
+   - Clients depend only on the methods they use—no “fat” interfaces.  
+5. **Dependency Inversion Principle (DIP)**  
+   - High-level modules depend on abstractions, not on low-level details; dependencies are injected.  
+
+---
+
+## 3. DRY, YAGNI & KISS for Readability and Simplicity
+- **DRY (Don’t Repeat Yourself):**  
+  - Shared functionality lives in utility classes or base components, eliminating duplication.  
+- **YAGNI (You Aren’t Gonna Need It):**  
+  - Only implement what’s required today; resist “just in case” features.  
+- **KISS (Keep It Simple, Stupid):**  
+  - Favor straightforward implementations that any team member can understand at a glance.  
+
+These principles keep the codebase lean, readable, and free from unused abstractions.
+
+---
+
+## 4. Separation of Concerns
+Responsibilities are divided across layers:
+
+- **Domain Logic**  
+  - Unaware of persistence or presentation details.  
+- **Data Access**  
+  - Abstracted behind repository interfaces.  
+- **Presentation / UI**  
+  - Handles user interaction, delegates all business decisions to the use-case layer.  
+
+This separation yields clearer code, easier parallel development, and more targeted testing.
+
+---
+
+## 5. Unit Testing for Quality Assurance
+Every critical component is covered by unit tests:
+
+- **Domain Tests**  
+  - Validate business rules under success and failure scenarios.  
+- **Use-Case Tests**  
+  - Confirm application workflows behave correctly across various scenarios.  
+- **Adapter Mocks**  
+  - Fake out persistence, network, or UI layers so tests remain fast and deterministic. 
