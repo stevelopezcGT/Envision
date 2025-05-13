@@ -1,9 +1,4 @@
-﻿using CryptoPriceTracker.Application.Dto;
-using CryptoPriceTracker.Application.Interfaces;
-using CryptoPriceTracker.Application.Services;
-using Microsoft.OpenApi.Models;
-
-namespace CryptoPriceTracker.Api.Extensions;
+﻿namespace CryptoPriceTracker.Api.Extensions;
 
 public static class ModulesExtensions
 {

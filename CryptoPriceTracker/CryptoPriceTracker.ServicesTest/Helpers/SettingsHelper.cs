@@ -1,7 +1,4 @@
-﻿using CryptoPriceTracker.Application.Dto;
-using Microsoft.Extensions.Options;
-
-namespace CryptoPriceTracker.ApplicationTest.Helpers;
+﻿namespace CryptoPriceTracker.ApplicationTest.Helpers;
 
 public static class SettingsHelper
 {

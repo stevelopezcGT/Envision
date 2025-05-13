@@ -1,11 +1,3 @@
-using CryptoPriceTracker.Application.Dto;
-using CryptoPriceTracker.Application.Interfaces;
-using CryptoPriceTracker.Domain.Entities;
-using CryptoPriceTracker.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-
 namespace CryptoPriceTracker.Application.Services;
 
 /// <summary>

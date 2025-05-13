@@ -1,0 +1,14 @@
+﻿global using CryptoPriceTracker.Api.Extensions;
+global using CryptoPriceTracker.Api.Middlewares;
+global using CryptoPriceTracker.Application.Dto;
+global using CryptoPriceTracker.Application.Interfaces;
+global using CryptoPriceTracker.Application.Services;
+global using CryptoPriceTracker.Domain.Entities;
+global using CryptoPriceTracker.Domain.Exceptions;
+global using CryptoPriceTracker.Infrastructure.Data;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.WebUtilities;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.OpenApi.Models;
+global using Newtonsoft.Json;
+global using System.Net;

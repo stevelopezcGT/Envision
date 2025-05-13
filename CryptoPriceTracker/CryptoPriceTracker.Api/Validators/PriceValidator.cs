@@ -1,5 +1,3 @@
-using CryptoPriceTracker.Domain.Entities;
-
 namespace CryptoPriceTracker.Api.Validators;
 
 public class PriceValidator

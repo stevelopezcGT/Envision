@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace CryptoPriceTracker.Api.Middlewares;
+﻿namespace CryptoPriceTracker.Api.Middlewares;
 
 /// <summary>
 /// Error details with the StatusCode and the Message Error or Execption Message

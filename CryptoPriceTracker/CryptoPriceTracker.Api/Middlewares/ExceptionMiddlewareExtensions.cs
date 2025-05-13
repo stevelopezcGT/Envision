@@ -1,8 +1,4 @@
-﻿using CryptoPriceTracker.Domain.Exceptions;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Net;
-
-namespace CryptoPriceTracker.Api.Middlewares;
+﻿namespace CryptoPriceTracker.Api.Middlewares;
 
 /// <summary>
 /// Extend the handler to capture the Exceptions

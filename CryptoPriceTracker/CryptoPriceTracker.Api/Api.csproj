@@ -14,21 +14,25 @@
     <Compile Remove="Models\**" />
     <Compile Remove="Services\**" />
     <Compile Remove="Views\**" />
+    <Compile Remove="wwwroot\**" />
     <Content Remove="Data\**" />
     <Content Remove="Migrations\**" />
     <Content Remove="Models\**" />
     <Content Remove="Services\**" />
     <Content Remove="Views\**" />
+    <Content Remove="wwwroot\**" />
     <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Services\**" />
     <EmbeddedResource Remove="Views\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
     <None Remove="Data\**" />
     <None Remove="Migrations\**" />
     <None Remove="Models\**" />
     <None Remove="Services\**" />
     <None Remove="Views\**" />
+    <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>

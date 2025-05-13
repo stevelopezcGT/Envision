@@ -1,6 +1,3 @@
-using CryptoPriceTracker.Application.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-
 namespace CryptoPriceTracker.Api.Controllers;
 
 /// <summary>

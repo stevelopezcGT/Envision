@@ -1,6 +1,4 @@
-﻿using CryptoPriceTracker.Application.Dto;
-
-namespace CryptoPriceTracker.Application.Interfaces;
+﻿namespace CryptoPriceTracker.Application.Interfaces;
 
 public interface ICryptoPriceService
 {

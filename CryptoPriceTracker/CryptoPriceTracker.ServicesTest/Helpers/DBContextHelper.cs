@@ -1,8 +1,4 @@
-﻿using CryptoPriceTracker.Domain.Entities;
-using CryptoPriceTracker.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-
-namespace CryptoPriceTracker.ApplicationTest.Helpers;
+﻿namespace CryptoPriceTracker.ApplicationTest.Helpers;
 
 public static class DBContextHelper
 {

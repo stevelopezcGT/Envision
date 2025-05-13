@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace CryptoPriceTracker.Application.Dto;
+﻿namespace CryptoPriceTracker.Application.Dto;
 
 public class CoinDto
 {
@@ -15,7 +13,6 @@ public class CoinDto
 
     [JsonProperty("image")]
     public Image Image { get; set; } = null!;
-
 }
 
 public class Image

@@ -1,6 +1,3 @@
-using CryptoPriceTracker.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-
 namespace CryptoPriceTracker.Infrastructure.Data;
 
 public class ApplicationDbContext : DbContext
@@ -21,6 +18,3 @@ public class ApplicationDbContext : DbContext
         );
     }
 }
-
-//dotnet ef migrations add "InitialCreate" --project CryptoPriceTracker.Infrastructure --startup-project CryptoPriceTracker.Api --output-dir Data\Migrations
-//dotnet ef database update --project CryptoPriceTracker.Infrastructure --startup-project CryptoPriceTracker.Api 

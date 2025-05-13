@@ -1,7 +1,4 @@
-﻿using Moq;
-using Moq.Protected;
-
-namespace CryptoPriceTracker.ApplicationTest.Helpers;
+﻿namespace CryptoPriceTracker.ApplicationTest.Helpers;
 
 public static class HttpClientHelper
 {

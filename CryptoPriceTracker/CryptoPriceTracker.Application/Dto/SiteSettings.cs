@@ -2,5 +2,5 @@
 
 public class SiteSettings
 {
-    public string EndPointUrl { get; set; }
+    public string EndPointUrl { get; set; } = string.Empty;
 }
