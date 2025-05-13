@@ -7,11 +7,26 @@
     });
 }
 
+async function loadInfoList() {
+
+    const container = document.getElementById("pricesContainer");
+    const gridResp = await fetch("/cryptoInfoList", {
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+    });
+    if (gridResp.ok) {
+        container.innerHTML = await gridResp.text();
+        convertDates();
+    } else {
+        container.innerHTML = "<p class='text-danger'>Unable to load the data.</p>";
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const updateBtn = document.getElementById("updateBtn");
-    const container = document.getElementById("pricesContainer");
     const spinner = document.getElementById("spinner");
     const statusEl = document.getElementById("statusMessage");
+
+    loadInfoList();
 
     updateBtn.addEventListener("click", async () => {
         spinner.classList.remove("d-none");
@@ -22,15 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ? ""
             : "❌ Failed to update.";
 
-        const gridResp = await fetch("/cryptoInfoList", {
-            headers: { "X-Requested-With": "XMLHttpRequest" }
-        });
-        if (gridResp.ok) {
-            container.innerHTML = await gridResp.text();
-            convertDates();
-        } else {
-            container.innerHTML = "<p class='text-danger'>Unable to load the data.</p>";
-        }
+        loadInfoList();
 
         spinner.classList.add("d-none");
     });
